@@ -5,6 +5,7 @@
   <img alt="XeLaTeX" src="https://img.shields.io/badge/Compilador-XeLaTeX-blue?style=for-the-badge">
   <img alt="ATS Friendly" src="https://img.shields.io/badge/Formato-Harvard%20%2F%20ATS--Friendly-success?style=for-the-badge">
   <img alt="moderncv" src="https://img.shields.io/badge/Clase-moderncv%20%7C%20banking-9cf?style=for-the-badge">
+  <img alt="Estructura" src="https://img.shields.io/badge/Estructura-Modular-orange?style=for-the-badge">
   <img alt="Idioma" src="https://img.shields.io/badge/Idioma-Español-informational?style=for-the-badge">
 </p>
 
@@ -16,6 +17,38 @@ que usa la industria tecnológica.
 > **¿Por qué sin fotografía?** El formato Harvard y el estilo `banking` de `moderncv` omiten
 > intencionalmente la foto: reduce el sesgo en la selección y evita que el parser del ATS
 > falle al procesar el documento.
+
+---
+
+## 🗂️ Estructura modular del proyecto
+
+El repositorio **ya no es un único archivo monolítico**. El CV está dividido en módulos: el
+preámbulo y los datos de contacto viven en `main.tex`, y cada sección es un archivo
+independiente dentro de `src/`. Editar la experiencia no obliga a abrir el resto del documento,
+y los diffs de Git quedan acotados a la sección que realmente cambió.
+
+```
+.
+├── main.tex              # ⬅️ ESTE ES EL ARCHIVO A COMPILAR
+│                         #    Preámbulo, datos de contacto y orden de las secciones
+├── src/
+│   ├── perfil.tex        # Perfil profesional
+│   ├── experiencia.tex   # Experiencia profesional (COTECMAR)
+│   ├── educacion.tex     # Formación académica y certificaciones
+│   ├── habilidades.tex   # Competencias técnicas
+│   ├── proyectos.tex     # Proyectos destacados
+│   └── idiomas.tex       # Idiomas
+├── .gitignore            # Excluye los artefactos de compilación de LaTeX
+└── README.md
+```
+
+> ⚠️ **Compila siempre `main.tex`.** Los archivos de `src/` son fragmentos: no contienen
+> preámbulo ni `\begin{document}`, así que por separado no compilan. `main.tex` los ensambla
+> mediante `\input{}`.
+
+**Para reordenar o silenciar una sección**, mueve o comenta su línea `\input{}` en `main.tex`.
+**Para añadir una sección nueva**, crea el archivo en `src/` y agrega su `\input{}` en el orden
+deseado.
 
 ---
 
@@ -36,18 +69,6 @@ que se pedía contradecía la realidad operativa del negocio.
 
 ---
 
-## 👨‍💻 Sobre mi perfil
-
-Soy **Estudiante de Ingeniería de Sistemas** a punto de graduarme, enfocado en el
-**Análisis Funcional**, la **Arquitectura de Software** y la **Integración de Sistemas (ERP/SAP)**.
-
-Me especializo en actuar como el puente estratégico entre las necesidades operativas complejas
-(entornos industriales, manufactura ETO) y los equipos de desarrollo de software bajo
-metodologías ágiles (Scrum). No me limito a codificar: diseño la arquitectura relacional y
-orquesto las reglas de negocio para que la tecnología genere impacto real.
-
----
-
 ## 🚀 Tecnologías y herramientas destacadas en mi CV
 
 | Área | Detalle |
@@ -63,45 +84,52 @@ orquesto las reglas de negocio para que la tecnología genere impacto real.
 
 ## 🛠️ Cómo compilar este CV
 
-Este repositorio contiene el código fuente para generar el CV en PDF.
-
 ### Opción 1 — Overleaf (recomendada)
 
 1. Crea un nuevo proyecto vacío en [Overleaf](https://www.overleaf.com/) (`New Project → Blank Project`).
-2. Sube el archivo `CV_Juan_Jimenez.tex` de este repositorio (`Upload`).
-3. **Importante:** abre `Menu → Compiler` y selecciona **XeLaTeX** (o LuaLaTeX). Es obligatorio
-   para renderizar la fuente *Noto Sans* mediante el paquete `fontspec`; con `pdfLaTeX` falla.
-4. Pulsa `Recompile` y descarga el PDF.
+2. Sube **todo el repositorio**, conservando la carpeta `src/`. La vía más simple es
+   `New Project → Upload Project` con un ZIP del repo, o importarlo directamente desde GitHub.
+3. En `Menu → Compiler`, selecciona **XeLaTeX** (o LuaLaTeX). Es obligatorio para renderizar
+   la fuente *Noto Sans* mediante `fontspec`; con `pdfLaTeX` falla.
+4. En `Menu → Main document`, confirma que esté seleccionado **`main.tex`**.
+5. Pulsa `Recompile` y descarga el PDF.
 
 ### Opción 2 — Entorno local
 
-Necesitas una distribución completa de TeX (TeX Live o MiKTeX) y la fuente *Noto Sans*
-instalada en el sistema.
+> ✅ **Compilación verificada.** La versión actual compila sin errores ni advertencias con
+> XeLaTeX (TeX Live 2023) y produce un PDF de **una sola página**.
+
+Necesitas una distribución de TeX con `moderncv` y la fuente *Noto Sans*. En Debian/Ubuntu:
 
 ```bash
-xelatex CV_Juan_Jimenez.tex
+sudo apt install texlive-xetex texlive-latex-extra texlive-fonts-extra \
+                 texlive-fonts-recommended texlive-lang-spanish fonts-noto-core
+```
+
+Luego, desde la raíz del repositorio:
+
+```bash
+xelatex main.tex
 ```
 
 Si prefieres LuaLaTeX:
 
 ```bash
-lualatex CV_Juan_Jimenez.tex
-```
-
-En Debian/Ubuntu, las dependencias se instalan así:
-
-```bash
-sudo apt install texlive-xetex texlive-latex-extra texlive-lang-spanish fonts-noto
+lualatex main.tex
 ```
 
 ### Solución de problemas
 
-| Error | Solución |
+| Error | Causa y solución |
 |---|---|
-| `Font "Noto Sans" not found` | Instala la fuente, o cambia `\setmainfont{Noto Sans}` por `Lato`, `Open Sans` o `Carlito` |
+| `File 'fontawesome5.sty' not found` | El estilo `banking` de `moderncv` usa iconos de FontAwesome. Instala `texlive-fonts-extra` |
+| `File 'moderncv.cls' not found` | Falta `texlive-latex-extra` |
+| `I can't find file 'pzdr'` / `Font \XeTeXLink@font=pzdr ... not loadable` | Falta la métrica ZapfDingbats que usa `hyperref`. Instala `texlive-fonts-recommended` |
+| `Option clash for package hyperref` | `moderncv` ya carga `hyperref`; no lo declares con `\usepackage`. Configúralo con `\hypersetup` dentro de `\AtBeginDocument{}`, como hace `main.tex` |
+| `Font "Noto Sans" not found` | Instala `fonts-noto-core`, o cambia `\setmainfont{Noto Sans}` en `main.tex` por `Lato`, `Open Sans` o `Carlito` |
 | `Unknown option "spanish" for package polyglossia` | Reemplaza la línea de `polyglossia` por `\usepackage[spanish,es-nodecimaldot]{babel}` |
-| `fontspec error: The fontspec package requires XeTeX or LuaTeX` | Estás compilando con `pdflatex`; cambia el compilador |
-| Acentos mal renderizados | Mismo caso anterior: el compilador no es XeLaTeX/LuaLaTeX |
+| `The fontspec package requires XeTeX or LuaTeX` | Estás compilando con `pdflatex`; cambia el compilador |
+| `File 'src/experiencia.tex' not found` | Estás compilando desde otra carpeta, o subiste solo `main.tex` sin la carpeta `src/` |
 
 ---
 

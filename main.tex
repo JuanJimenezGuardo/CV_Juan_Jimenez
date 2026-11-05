@@ -1,0 +1,75 @@
+%==============================================================================
+% Curriculum Vitae — Juan José Jiménez Guardo
+% Estilo: Harvard / ATS-friendly (sin fotografía, una sola columna)
+% Compilador requerido: XeLaTeX o LuaLaTeX (por el uso de fontspec)
+%
+% ESTRUCTURA MODULAR
+%   main.tex        -> preámbulo, datos de contacto y orden de las secciones
+%   src/*.tex       -> contenido de cada sección, editable de forma independiente
+%
+% Para compilar:  xelatex main.tex
+%==============================================================================
+
+\documentclass[10pt,a4paper,sans]{moderncv}
+
+% --- Estilo y color -----------------------------------------------------------
+\moderncvstyle{banking}   % Estilo sobrio: sin barras laterales ni fotografía
+\moderncvcolor{black}     % Monocromo: máxima legibilidad para filtros ATS
+
+% --- Tipografía (requiere XeLaTeX/LuaLaTeX) -----------------------------------
+\usepackage{fontspec}
+\setmainfont{Noto Sans}   % Alternativas si no está disponible: Open Sans, Lato, Carlito
+
+\usepackage{polyglossia}
+\setdefaultlanguage{spanish}
+
+\usepackage[top=0.9cm,bottom=0.8cm,left=1.5cm,right=1.5cm]{geometry}
+\setlength{\hintscolumnwidth}{3.0cm}
+
+% --- Interlineado compacto en las listas, para que el CV quepa en una página --
+\usepackage{enumitem}
+\setlist[itemize]{topsep=1pt,itemsep=0pt,parsep=0pt,partopsep=0pt}
+
+% --- Metadatos del PDF (los leen varios parsers de hojas de vida) -------------
+% moderncv carga hyperref por su cuenta en \begin{document}; declararlo aquí con
+% \usepackage provoca «Option clash for package hyperref». Por eso la
+% configuración se aplica en un gancho que corre despues de esa carga.
+\AtBeginDocument{%
+  \hypersetup{
+    pdftitle={Juan José Jiménez Guardo — Curriculum Vitae},
+    pdfauthor={Juan José Jiménez Guardo},
+    pdfsubject={Ingeniería de Sistemas — Análisis Funcional y Arquitectura de Software},
+    pdfkeywords={Análisis Funcional, Arquitectura de Software, SAP, ERP, Laravel, Vue, Scrum, Modelado de Datos},
+    hidelinks
+  }%
+}
+
+%==============================================================================
+% DATOS PERSONALES DE CONTACTO
+%==============================================================================
+\name{Juan José}{Jiménez Guardo}
+\title{Análisis Funcional \textbullet{} Arquitectura de Software \textbullet{} Integración ERP/SAP}
+\address{Cartagena de Indias}{Bolívar, Colombia}{}
+\phone[mobile]{+57 [TU NÚMERO]}
+\email{juanjimenezg207@gmail.com}
+\social[linkedin]{tu-usuario-linkedin}   % <- reemplazar por tu usuario real
+\social[github]{JuanJimenezGuardo}
+
+%==============================================================================
+% DOCUMENTO
+%==============================================================================
+\begin{document}
+
+\makecvtitle
+\vspace*{-14mm}
+
+% El orden de estos \input define el orden de las secciones del CV.
+% Para reordenar o silenciar una sección, mueve o comenta su línea.
+\input{src/perfil.tex}
+\input{src/experiencia.tex}
+\input{src/educacion.tex}
+\input{src/habilidades.tex}
+\input{src/proyectos.tex}
+\input{src/idiomas.tex}
+
+\end{document}
