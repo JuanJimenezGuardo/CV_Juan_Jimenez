@@ -10,5 +10,8 @@
 *.blg
 *.xdv
 
-# El PDF generado se publica aparte, no se versiona
+# main.pdf SI se versiona a proposito: permite descargar el CV desde GitHub
+# sin compilar nada. Lo regenera el workflow de GitHub Actions en cada push.
+# Cualquier otro PDF suelto queda fuera:
 *.pdf
+!main.pdf

@@ -1,0 +1,53 @@
+name: Compilar CV
+
+# Recompila el PDF cada vez que cambia el fuente del CV y lo deja
+# versionado en el repositorio, para que siempre se pueda descargar
+# una version al dia sin necesidad de compilar nada en local.
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**.tex'
+      - 'fonts/**'
+      - '.github/workflows/compilar-cv.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: compilar-cv-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  compilar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clonar el repositorio
+        uses: actions/checkout@v4
+
+      - name: Compilar main.tex con XeLaTeX
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: main.tex
+          latexmk_use_xelatex: true
+
+      - name: Publicar el PDF como artefacto descargable
+        uses: actions/upload-artifact@v4
+        with:
+          name: CV_Juan_Jimenez
+          path: main.pdf
+          if-no-files-found: error
+
+      - name: Versionar el PDF si cambio
+        run: |
+          set -euo pipefail
+          if [ -z "$(git status --porcelain main.pdf)" ]; then
+            echo "El PDF no cambio; no hay nada que commitear."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add main.pdf
+          git commit -m "chore: recompilar CV [skip ci]"
+          git push

@@ -18,7 +18,21 @@
 
 % --- Tipografía (requiere XeLaTeX/LuaLaTeX) -----------------------------------
 \usepackage{fontspec}
-\setmainfont{Noto Sans}   % Alternativas si no está disponible: Open Sans, Lato, Carlito
+% Las fuentes viajan dentro del repositorio (carpeta fonts/), así que el CV
+% compila igual en Overleaf, en CI o en cualquier máquina, sin instalar nada.
+% OJO: la opción «sans» de moderncv apunta \familydefault a \sfdefault, así que
+% definir solo \setmainfont deja el cuerpo en Latin Modern. Hay que fijar ambas.
+\defaultfontfeatures{
+  Path            = fonts/,
+  Scale           = 0.90,
+  Extension       = .ttf,
+  UprightFont     = *-Regular,
+  BoldFont        = *-Bold,
+  ItalicFont      = *-Italic,
+  BoldItalicFont  = *-BoldItalic
+}
+\setmainfont{NotoSans}
+\setsansfont{NotoSans}
 
 \usepackage{polyglossia}
 \setdefaultlanguage{spanish}

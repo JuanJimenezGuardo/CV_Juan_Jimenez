@@ -9,6 +9,17 @@
   <img alt="Idioma" src="https://img.shields.io/badge/Idioma-Español-informational?style=for-the-badge">
 </p>
 
+<p align="center">
+  <a href="https://github.com/JuanJimenezGuardo/CV_Juan_Jimenez/actions/workflows/compilar-cv.yml">
+    <img alt="Estado de compilación" src="https://github.com/JuanJimenezGuardo/CV_Juan_Jimenez/actions/workflows/compilar-cv.yml/badge.svg">
+  </a>
+  <a href="https://github.com/JuanJimenezGuardo/CV_Juan_Jimenez/raw/main/main.pdf">
+    <img alt="Descargar CV" src="https://img.shields.io/badge/⬇_Descargar_CV-PDF-red?style=flat-square">
+  </a>
+</p>
+
+> 📥 **¿Solo quieres el CV?** [Descarga el PDF aquí](https://github.com/JuanJimenezGuardo/CV_Juan_Jimenez/raw/main/main.pdf). Se recompila automáticamente en cada cambio del fuente, así que siempre está al día.
+
 Bienvenido al repositorio de mi Curriculum Vitae. Este CV está estructurado bajo el estándar
 **Harvard / ATS-friendly** y diseñado íntegramente en código **LaTeX**, para garantizar una
 presentación limpia, profesional y legible por los sistemas de selección automáticos (ATS)
@@ -29,22 +40,33 @@ y los diffs de Git quedan acotados a la sección que realmente cambió.
 
 ```
 .
-├── main.tex              # ⬅️ ESTE ES EL ARCHIVO A COMPILAR
-│                         #    Preámbulo, datos de contacto y orden de las secciones
+├── main.tex                  # ⬅️ ESTE ES EL ARCHIVO A COMPILAR
+│                             #    Preámbulo, datos de contacto y orden de secciones
+├── main.pdf                  # CV compilado, versionado a propósito
 ├── src/
-│   ├── perfil.tex        # Perfil profesional
-│   ├── experiencia.tex   # Experiencia profesional (COTECMAR)
-│   ├── educacion.tex     # Formación académica y certificaciones
-│   ├── habilidades.tex   # Competencias técnicas
-│   ├── proyectos.tex     # Proyectos destacados
-│   └── idiomas.tex       # Idiomas
-├── .gitignore            # Excluye los artefactos de compilación de LaTeX
+│   ├── perfil.tex            # Perfil profesional
+│   ├── experiencia.tex       # Experiencia profesional (COTECMAR)
+│   ├── educacion.tex         # Formación académica y certificaciones
+│   ├── habilidades.tex       # Competencias técnicas
+│   ├── proyectos.tex         # Proyectos destacados
+│   └── idiomas.tex           # Idiomas
+├── fonts/                    # Noto Sans (OFL) embebida: el CV compila sin
+│   └── NotoSans-*.ttf        # instalar fuentes en el sistema
+├── .github/workflows/
+│   └── compilar-cv.yml       # CI: recompila el PDF en cada push
+├── .gitignore
 └── README.md
 ```
 
 > ⚠️ **Compila siempre `main.tex`.** Los archivos de `src/` son fragmentos: no contienen
 > preámbulo ni `\begin{document}`, así que por separado no compilan. `main.tex` los ensambla
 > mediante `\input{}`.
+
+### 🔒 Compilación reproducible
+
+La fuente **Noto Sans** viaja dentro del repositorio (`fonts/`, licencia SIL OFL) y `main.tex` la carga por ruta con `fontspec`. El CV compila igual en Overleaf, en CI o en una máquina recién instalada, sin depender de qué fuentes tenga el sistema.
+
+---
 
 **Para reordenar o silenciar una sección**, mueve o comenta su línea `\input{}` en `main.tex`.
 **Para añadir una sección nueva**, crea el archivo en `src/` y agrega su `\input{}` en el orden
@@ -99,11 +121,11 @@ que se pedía contradecía la realidad operativa del negocio.
 > ✅ **Compilación verificada.** La versión actual compila sin errores ni advertencias con
 > XeLaTeX (TeX Live 2023) y produce un PDF de **una sola página**.
 
-Necesitas una distribución de TeX con `moderncv` y la fuente *Noto Sans*. En Debian/Ubuntu:
+Necesitas una distribución de TeX con `moderncv`. La fuente ya viene en el repositorio. En Debian/Ubuntu:
 
 ```bash
 sudo apt install texlive-xetex texlive-latex-extra texlive-fonts-extra \
-                 texlive-fonts-recommended texlive-lang-spanish fonts-noto-core
+                 texlive-fonts-recommended texlive-lang-spanish
 ```
 
 Luego, desde la raíz del repositorio:
@@ -126,7 +148,8 @@ lualatex main.tex
 | `File 'moderncv.cls' not found` | Falta `texlive-latex-extra` |
 | `I can't find file 'pzdr'` / `Font \XeTeXLink@font=pzdr ... not loadable` | Falta la métrica ZapfDingbats que usa `hyperref`. Instala `texlive-fonts-recommended` |
 | `Option clash for package hyperref` | `moderncv` ya carga `hyperref`; no lo declares con `\usepackage`. Configúralo con `\hypersetup` dentro de `\AtBeginDocument{}`, como hace `main.tex` |
-| `Font "Noto Sans" not found` | Instala `fonts-noto-core`, o cambia `\setmainfont{Noto Sans}` en `main.tex` por `Lato`, `Open Sans` o `Carlito` |
+| `Font ... NotoSans-Regular.ttf not found` | Compilas desde otra carpeta, o subiste `main.tex` sin la carpeta `fonts/` |
+| El texto sale en Latin Modern y no en Noto Sans | La opción `sans` de `moderncv` apunta a `\sfdefault`; hay que fijar `\setsansfont` además de `\setmainfont` |
 | `Unknown option "spanish" for package polyglossia` | Reemplaza la línea de `polyglossia` por `\usepackage[spanish,es-nodecimaldot]{babel}` |
 | `The fontspec package requires XeTeX or LuaTeX` | Estás compilando con `pdflatex`; cambia el compilador |
 | `File 'src/experiencia.tex' not found` | Estás compilando desde otra carpeta, o subiste solo `main.tex` sin la carpeta `src/` |
