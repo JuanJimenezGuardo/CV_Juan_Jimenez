@@ -1,9 +1,14 @@
+# Artefactos de compilación de LaTeX
 *.aux
-*.fdb_latexmk
-*.fls
 *.log
 *.out
-*.synctex.gz
 *.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+*.bbl
+*.blg
 *.xdv
+
+# El PDF generado se publica aparte, no se versiona
 *.pdf

@@ -1,71 +1,132 @@
-\documentclass[10pt,a4paper]{article}
+%==============================================================================
+% Curriculum Vitae — Juan José Jiménez Guardo
+% Estilo: Harvard / ATS-friendly (sin fotografía, una sola columna)
+% Compilador requerido: XeLaTeX o LuaLaTeX (por el uso de fontspec)
+%==============================================================================
 
-\usepackage[margin=1.55cm]{geometry}
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage[spanish,es-nodecimaldot]{babel}
-\usepackage{lmodern}
-\usepackage{enumitem}
+\documentclass[11pt,a4paper,sans]{moderncv}
+
+% --- Estilo y color -----------------------------------------------------------
+\moderncvstyle{banking}   % Estilo sobrio: sin barras laterales ni fotografía
+\moderncvcolor{black}     % Monocromo: máxima legibilidad para filtros ATS
+
+% --- Tipografía (requiere XeLaTeX/LuaLaTeX) -----------------------------------
+\usepackage{fontspec}
+\setmainfont{Noto Sans}   % Alternativas si no está disponible: Open Sans, Lato, Carlito
+
+\usepackage{polyglossia}
+\setdefaultlanguage{spanish}
+
+\usepackage[scale=0.78,top=1.6cm,bottom=1.6cm]{geometry}
+\setlength{\hintscolumnwidth}{3.0cm}
+
+% --- Metadatos del PDF (los leen varios parsers de hojas de vida) -------------
 \usepackage{hyperref}
-\usepackage{xcolor}
-\usepackage{titlesec}
+\hypersetup{
+  pdftitle={Juan José Jiménez Guardo — Curriculum Vitae},
+  pdfauthor={Juan José Jiménez Guardo},
+  pdfsubject={Ingeniería de Sistemas — Análisis Funcional y Arquitectura de Software},
+  pdfkeywords={Análisis Funcional, Arquitectura de Software, SAP, ERP, Laravel, Vue, Scrum, Modelado de Datos},
+  colorlinks=false, hidelinks
+}
 
-\definecolor{ink}{HTML}{1E293B}
-\definecolor{accent}{HTML}{0F766E}
-\hypersetup{colorlinks=true,urlcolor=accent,linkcolor=accent}
-\pagestyle{empty}
-\setlength{\parindent}{0pt}
-\setlist[itemize]{leftmargin=1.2em,itemsep=1pt,topsep=2pt}
-\titleformat{\section}{\large\bfseries\color{accent}}{}{0pt}{}[\vspace{-4pt}\color{accent}\rule{\linewidth}{0.5pt}]
-\titlespacing*{\section}{0pt}{8pt}{4pt}
+%==============================================================================
+% DATOS PERSONALES
+%==============================================================================
+\name{Juan José}{Jiménez Guardo}
+\title{Ingeniero de Sistemas \textbar{} Análisis Funcional, Arquitectura de Software e Integración ERP/SAP}
+\address{Cartagena de Indias}{Bolívar, Colombia}{}
+\phone[mobile]{+57 [TU NÚMERO]}
+\email{juanjimenezg207@gmail.com}
+\social[linkedin]{[TU-USUARIO-LINKEDIN]}
+\social[github]{JuanJimenezGuardo}
 
 \begin{document}
 
-{\LARGE\bfseries\color{ink} Juan Jimenez}\\[2pt]
-{\large Ingenieria | Negocio | Operaciones y mejora continua}\\[4pt]
-\href{mailto:[correo]}{[correo]} \textbar{} [telefono] \textbar{}
-\href{https://www.linkedin.com/in/[usuario-linkedin]}{linkedin.com/in/[usuario-linkedin]} \textbar{} [ciudad, pais]
+\makecvtitle
+\vspace*{-8mm}
 
-\section*{Perfil profesional}
-Profesional con perfil hibrido en Ingenieria y Negocio, orientado a conectar la ejecucion operativa con la toma de decisiones. Experiencia en [sector, procesos o especialidad], con interes en mejora continua, analisis, coordinacion de equipos y generacion de valor. Capacidad para traducir necesidades del negocio en acciones medibles y sostenibles.
+%==============================================================================
+\section{Perfil Profesional}
+%==============================================================================
 
-\section*{Competencias}
-\begin{itemize}
-  \item Ingenieria: [proceso o especialidad], mejora continua, indicadores, calidad y seguridad.
-  \item Negocio: analisis de datos, planeacion, costos, gestion de proyectos y relacion con clientes.
-  \item Herramientas: [Excel], [Power BI], [ERP], [software tecnico].
-  \item Idiomas: Espanol nativo; Ingles [nivel].
-\end{itemize}
+Estudiante de último semestre de Ingeniería de Sistemas, orientado al análisis
+funcional, la arquitectura de software y la integración de sistemas corporativos
+(ERP/SAP). Actúo como puente entre operaciones industriales complejas —manufactura
+ETO, entorno naval— y los equipos de desarrollo bajo metodologías ágiles (Scrum).
+Mi aporte no se limita a la codificación: levanto reglas de negocio, diseño el
+modelo relacional y defino la arquitectura de integración para que la solución
+técnica resuelva el problema operativo real.
 
-\section*{Experiencia profesional}
-\textbf{COTECMAR} \hfill [mes anio] -- Actualidad\\
-\textit{[Cargo] | [Ciudad, pais]}
-\begin{itemize}
-  \item [Verbo de accion] [proyecto, proceso o responsabilidad] para [alcance o equipo], logrando [resultado medible].
-  \item [Verbo de accion] [actividad relacionada con ingenieria], mejorando [indicador] en [porcentaje o resultado].
-  \item [Verbo de accion] [actividad relacionada con negocio, cliente o proveedores] mediante [metodo o herramienta].
-\end{itemize}
+%==============================================================================
+\section{Experiencia Profesional}
+%==============================================================================
 
-\textbf{[Empresa anterior]} \hfill [mes anio] -- [mes anio]\\
-\textit{[Cargo] | [Ciudad, pais]}
-\begin{itemize}
-  \item [Logro cuantificable y relevante para la vacante].
-  \item [Responsabilidad o proyecto con resultado concreto].
-\end{itemize}
+\cventry{[MES AAAA]--Presente}
+        {Analista Funcional y Desarrollador de Software}
+        {COTECMAR — Corporación de Ciencia y Tecnología para el Desarrollo de la Industria Naval}
+        {Cartagena, Colombia}{}
+{\begin{itemize}
+  \item Análisis funcional y diseño de la arquitectura de \textbf{TOP} (Portal de
+        Operaciones Tecnológicas), sistema tipo MES que opera entre el piso de
+        producción del astillero y el ERP corporativo SAP, en reemplazo de una
+        gestión fragmentada en archivos Excel y cronogramas aislados.
+  \item Ingeniería inversa del sistema \emph{legacy} y rediseño del modelo relacional
+        (ERD documentado en Mermaid.js): unificación de estructuras redundantes de
+        costos en una jerarquía única y corrección del modelo para soportar la
+        realidad comercial de un proyecto con múltiples cascos.
+  \item Diseño del modelo de integración con \textbf{SAP MM/PS}: inyección de
+        solicitudes de pedido y reservas desde TOP, con una regla de caducidad que
+        elimina las reservas fantasma responsables de inmovilizar inventario.
+  \item Definición del indicador operativo de productividad (\textbf{Kg/HH}) como
+        valor derivado, calculado sobre horas-hombre efectivamente auditadas y
+        aprobadas, y del circuito de validación Supervisor $\rightarrow$ Jefe de Área
+        previo a la imputación de consumos.
+  \item Rediseño funcional del módulo comercial de estimaciones: máquina de ocho
+        estados con la firma como prerrequisito del contrato, y vistas Kanban,
+        tabla y calendario.
+  \item Desarrollo sobre \textbf{Laravel 10} (PHP 8), \textbf{Vue 3} e
+        \textbf{Inertia.js}, con MySQL como base operativa y conexiones SQL Server
+        hacia SAP.
+\end{itemize}}
 
-\section*{Educacion}
-\textbf{[Nombre de la universidad]} \hfill [anio] -- [anio]\\
-\textit{[Titulo profesional] | [Ciudad, pais]}
+% --- Duplicar este bloque para experiencias anteriores, prácticas o freelance ---
+% \cventry{[AAAA]--[AAAA]}{[Cargo]}{[Empresa]}{[Ciudad]}{}{[Logros medibles]}
 
-\textbf{[Certificacion o formacion complementaria]} \hfill [anio]
+%==============================================================================
+\section{Formación Académica}
+%==============================================================================
 
-\section*{Proyectos y logros}
-\begin{itemize}
-  \item \textbf{[Proyecto o logro]:} [contexto, contribucion y resultado].
-  \item \textbf{[Proyecto o logro]:} [contexto, contribucion y resultado].
-\end{itemize}
+\cventry{[AAAA]--[AAAA]}
+        {Ingeniería de Sistemas}
+        {[NOMBRE DE TU UNIVERSIDAD]}
+        {Cartagena, Colombia}{}
+        {Énfasis en ingeniería de software, bases de datos y arquitectura de sistemas de información.}
 
-\section*{Referencias}
-Disponibles previa solicitud.
+%==============================================================================
+\section{Competencias Técnicas}
+%==============================================================================
+
+\cvitem{Arquitectura}{Modelado relacional y ERD, diccionarios de datos, diagramación con Mermaid.js, diseño transaccional, integridad referencial, arquitectura de integración entre sistemas.}
+\cvitem{Backend}{PHP 8, Laravel 10, Eloquent ORM, diseño de APIs REST, migraciones versionadas, control de permisos y auditoría.}
+\cvitem{Frontend}{Vue 3, Inertia.js, Vite, Tailwind CSS, JavaScript.}
+\cvitem{Bases de datos}{MySQL, SQL Server, SQL avanzado, normalización, optimización de consultas.}
+\cvitem{ERP / Integración}{SAP ERP (módulos MM y PS), homologación de maestros, orquestación de transacciones hacia el ERP, lógica de industria naval (ETO, grafos, SWBS).}
+\cvitem{Metodologías}{Scrum, levantamiento de requerimientos funcionales, documentación técnica, gestión de proyectos TI.}
+\cvitem{Herramientas}{Git, GitHub, Docker, Jenkins (CI/CD), \LaTeX{}.}
+
+%==============================================================================
+\section{Proyectos Destacados}
+%==============================================================================
+
+\cvitem{TOP}{Portal de Operaciones Tecnológicas de COTECMAR. Plataforma de ejecución de manufactura para un astillero mixto —construcción y reparación— que orquesta programación, planillación, productividad y el ciclo logístico de materiales, manteniendo SAP como fuente maestra de la verdad financiera y de inventario.}
+% \cvitem{[Proyecto]}{[Problema, solución y resultado en una o dos líneas.]}
+
+%==============================================================================
+\section{Idiomas}
+%==============================================================================
+
+\cvitemwithcomment{Español}{Nativo}{}
+\cvitemwithcomment{Inglés}{[Nivel — ej. B2 intermedio alto]}{Lectura técnica fluida}
 
 \end{document}
