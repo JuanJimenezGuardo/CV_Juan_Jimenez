@@ -37,10 +37,29 @@
 \usepackage{polyglossia}
 \setdefaultlanguage{spanish}
 
-\usepackage[top=0.9cm,bottom=1.0cm,left=1.5cm,right=1.5cm]{geometry}
+\usepackage[top=1.6cm,bottom=1.1cm,left=1.5cm,right=1.5cm]{geometry}
 \setlength{\hintscolumnwidth}{3.0cm}
 
+% --- Encabezado con mas aire -------------------------------------------------
+% El estilo «banking» imprime nombre y cargo pegados en la misma linea, ambos en
+% \Huge, separados por «|». Aqui se baja el cargo a su propia linea y se reduce
+% su tamano, para que haya jerarquia visual entre nombre, cargo y contacto.
+\makeatletter
+\renewcommand*{\namefont}{\Huge\bfseries\upshape}
+\renewcommand*{\titlefont}{\LARGE\mdseries\upshape}
+% Cargo en su propia línea, mas pequeno que el nombre y con aire debajo.
+\renewcommand*{\titlestyle}[1]{\\[0.7em]{\titlefont\textcolor{color2!85}{\@title}}\vspace{0.9em}}
+% Datos de contacto con mas interlineado para que no se vean apelmazados.
+\renewcommand*{\addressfont}{\fontsize{10}{16}\selectfont\mdseries\upshape}
+% El bloque de contacto usa 0.8\textwidth y deja GitHub colgando en una linea
+% suelta; ensancharlo al ancho completo lo equilibra. Si el parche falla, el
+% encabezado sigue funcionando igual que antes.
+\usepackage{etoolbox}
+\patchcmd{\makehead}{0.8\textwidth}{\textwidth}{}{\typeout{AVISO: no se pudo ensanchar el bloque de contacto}}
+\makeatother
+
 % --- Interlineado compacto en las listas, para que el CV quepa en una página --
+\usepackage{needspace}   % evita que una sección quede partida entre páginas
 \usepackage{enumitem}
 \setlist[itemize]{topsep=1pt,itemsep=0pt,parsep=0pt,partopsep=0pt}
 
@@ -75,7 +94,7 @@
 \begin{document}
 
 \makecvtitle
-\vspace*{-14mm}
+\vspace*{-1mm}
 
 % El orden de estos \input define el orden de las secciones del CV.
 % Para reordenar o silenciar una sección, mueve o comenta su línea.
