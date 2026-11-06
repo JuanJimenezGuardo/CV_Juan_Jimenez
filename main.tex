@@ -37,8 +37,8 @@
 \usepackage{polyglossia}
 \setdefaultlanguage{spanish}
 
-\usepackage[top=1.6cm,bottom=1.1cm,left=1.5cm,right=1.5cm]{geometry}
-\setlength{\hintscolumnwidth}{3.0cm}
+\usepackage[top=1.3cm,bottom=1.0cm,left=1.5cm,right=1.5cm]{geometry}
+\setlength{\hintscolumnwidth}{2.2cm}
 
 % --- Encabezado con mas aire -------------------------------------------------
 % El estilo «banking» imprime nombre y cargo pegados en la misma linea, ambos en
@@ -46,9 +46,9 @@
 % su tamano, para que haya jerarquia visual entre nombre, cargo y contacto.
 \makeatletter
 \renewcommand*{\namefont}{\Huge\bfseries\upshape}
-\renewcommand*{\titlefont}{\LARGE\mdseries\upshape}
+\renewcommand*{\titlefont}{\Large\mdseries\upshape}
 % Cargo en su propia línea, mas pequeno que el nombre y con aire debajo.
-\renewcommand*{\titlestyle}[1]{\\[0.7em]{\titlefont\textcolor{color2!85}{\@title}}\vspace{0.9em}}
+\renewcommand*{\titlestyle}[1]{\\[0.7em]{\titlefont\textcolor{color2}{\@title}}\vspace{0.9em}}
 % Datos de contacto con mas interlineado para que no se vean apelmazados.
 \renewcommand*{\addressfont}{\fontsize{10}{16}\selectfont\mdseries\upshape}
 % El bloque de contacto usa 0.8\textwidth y deja GitHub colgando en una linea
@@ -59,6 +59,20 @@
 \makeatother
 
 % --- Interlineado compacto en las listas, para que el CV quepa en una página --
+% Espaciado de secciones mas ajustado. moderncv reserva 2.5ex antes y 1ex
+% despues de cada titulo de seccion; con seis secciones eso suma casi cuatro
+% lineas. Esta es la definicion original de moderncvbodyiii, solo con los dos
+% \addvspace reducidos.
+\makeatletter
+\RenewDocumentCommand{\section}{sm}{%
+  \par\addvspace{1.6ex}%
+  \phantomsection{}%
+  \addcontentsline{toc}{section}{#2}%
+  \strut\sectionstyle{#2}%
+  \sectionrule%
+  \par\nobreak\addvspace{0.7ex}\@afterheading}
+\makeatother
+
 \usepackage{needspace}   % evita que una sección quede partida entre páginas
 \usepackage{enumitem}
 \setlist[itemize]{topsep=1pt,itemsep=0pt,parsep=0pt,partopsep=0pt}
@@ -81,7 +95,7 @@
 % DATOS PERSONALES DE CONTACTO
 %==============================================================================
 \name{Juan José}{Jiménez Guardo}
-\title{Análisis Funcional \textbullet{} Arquitectura de Software \textbullet{} Integración ERP/SAP}
+\title{Arquitectura de Software \textbullet{} Desarrollador Full-Stack \textbullet{} Integración ERP/SAP}
 \address{Cartagena de Indias}{Bolívar, Colombia}{}
 \phone[mobile]{(+57) 300 8368682}
 \email{juanjimenezg207@gmail.com}
@@ -93,8 +107,13 @@
 %==============================================================================
 \begin{document}
 
+% Sin numeración de páginas: moderncv activa el pie «1/2» en su propio
+% \AtBeginDocument, de modo que hay que anularlo aquí, ya dentro del cuerpo.
+\fancypagestyle{plain}{\fancyhf{}}
+\pagestyle{empty}
+
 \makecvtitle
-\vspace*{-1mm}
+\vspace*{-6mm}
 
 % El orden de estos \input define el orden de las secciones del CV.
 % Para reordenar o silenciar una sección, mueve o comenta su línea.
@@ -102,7 +121,13 @@
 \input{src/experiencia.tex}
 \input{src/educacion.tex}
 \input{src/habilidades.tex}
-\input{src/idiomas.tex}
-\input{src/proyectos.tex}
+% Los idiomas pasaron a ser una fila de Competencias Tecnicas: como seccion
+% aparte, su encabezado empujaba el CV a una segunda pagina con tres lineas.
+% Para recuperarla como seccion propia, descomentar la linea siguiente.
+% \input{src/idiomas.tex}
+% VIT paso a Experiencia Profesional, asi que esta seccion solo contendria TOP,
+% que ya se describe en la entrada de COTECMAR. Se deja el archivo en el repo:
+% para recuperarla basta descomentar la linea siguiente.
+% \input{src/proyectos.tex}
 
 \end{document}
